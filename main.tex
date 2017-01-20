@@ -1,14 +1,60 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
+% CREATED BY DAVID FRISK, 2016
 
-\title{Kandidat-highlights}
-\author{Jesper Jaxing}
-\date{January 2017}
+% IMPORT SETTINGS
+\documentclass[12pt,a4paper,twoside,openright]{report}
+\input{settings}
 
-\begin{document}
+\begin{document} 
 
-\maketitle
+% COVER PAGE, TITLE PAGE AND IMPRINT PAGE
+\pagenumbering{roman}			% Roman numbering (starting with i (one)) until first main chapter
+\input{include/front/titlepage}
 
-\section{Introduction}
+% ABSTRACT
+\newpage
+\input{include/front/abstract}
+
+% ACKNOWLEDGEMENTS
+\newpage
+\input{include/front/ack}
+
+
+% TABLE OF CONTENTS
+\newpage
+\tableofcontents
+
+% OTHER FRONTMATTER
+% List of figures (add to table of contents)
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listfigurename} 
+\listoffigures
+% List of tables (add to table of contents)
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listtablename}  
+\listoftables
+
+
+% START OF MAIN DOCUMENT
+\cleardoublepage
+\setcounter{page}{1}
+\pagenumbering{arabic}			% Arabic numbering starting from 1 (one)
+\setlength{\parskip}{0pt plus 1pt}
+
+% INTRODUCTION
+\input{include/introduction}
+
+% REFERENCES / BIBLIOGRAPHY
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliography}
+\input{include/back/references}
+
+% APPENDICES
+\cleardoublepage
+\appendix
+\setcounter{page}{1}
+\pagenumbering{Roman}			% Capitalized roman numbering starting from I (one)
+
+\input{include/back/appendix_1}
+
 
 \end{document}
