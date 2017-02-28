@@ -1,7 +1,12 @@
 % CREATED BY DAVID FRISK, 2016
 % MODIFIED BY ALEXANDER HÅKANSSON, 2017
 
+% "Variables"
+\newcommand{\varthetitle}{Deep learning for automatic mentions and highlights}
+\newcommand{\varthesubtitle}{The use of artificial neural networks to do cool stuff (fix)}
+
 % BASIC SETTINGS
+\usepackage{glossaries}                             % Glossarie
 \usepackage{moreverb}								% List settings
 \usepackage{textcomp}								% Fonts, symbols etc.
 \usepackage{lmodern}								% Latin modern font
@@ -28,6 +33,14 @@
 	\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#3}}}}
 \usepackage{float} 									% Enables object position enforcement using [H]
 \usepackage{parskip}								% Enables vertical spaces correctly 
+
+\usepackage[
+backend=biber,
+style=apa,
+sorting=nyt,
+citestyle=apa 
+]{biblatex}
+\addbibresource{references.bib}
  
 
 % OPTIONAL SETTINGS (DELETE OR COMMENT TO SUPRESS)

@@ -1,26 +1,33 @@
 % CREATED BY DAVID FRISK, 2016
 \chapter{Introduction}
-This chapter presents the section levels that can be used in the template. 
+This is the report for the bachelor’s thesis “\varthetitle“ given by the Department of Computer Science and Engineering at Chalmers University of Technology.
 
-\section{Section levels}
-The following table presents an overview of the section levels that are used in this document. The number of levels that are numbered and included in the table of contents is set in the settings file \texttt{Settings.tex}. The levels are shown in Section \ref{Section_ref}.
+\section{Background} \label{Section_ref}
+In today’s digital age it can be a hard time keeping track of all the content and conversations on different social platforms; such as Slack, Facebook Messenger, WhatsApp and Reddit. People do not want to miss the conversations or news that might interest them, rather get instant feedback when these conversations or news take place. There is a problem with this in that people can not monitor all content at all times. In addition, it is an inefficient use of a person’s time to consume content that is of disinterest.
+\\\\
+On today’s social platforms notifications are indiscriminate in that it is hard getting notified when something of interest is posted while not being notified at all times. Some applications have tried to solve this by allowing manual “mentioning” or “highlighting” of a person to get their attention; Slack is one example of this \parencite{slack}. However, these functions put a constraint on the users where they need to figure out by themselves who might be interested in some content. It is also deemed as bad manners to highlight a person - or a group of people - too often. Studies have even shown that an excessive amount of notifications can lead to stress \parencite{relaffinity}. One solution to this problem could be some middle ground, such that content could be automatically highlighted for specific users when deemed interesting to them. Such a middle ground would be beneficial for both the users and the owner of the platform. It would make it easier for users to find interesting content which would improve the overall experience for the average user - this, in turn, benefits the owner of the platform as its users get more satisfied overall.
+\\\\
+Similar works have been done in other fields like electronic commerce. Amazon uses a technique called recommender systems to recommend new items for their users \parencite{amazonfiltering}. Their recommender system is not based on deep learning but rather compares the similarity between new products and products that a user has previously bought or rated \parencite{amazonfiltering}.
 
-\begin{table}[H]
-\centering
-\begin{tabular}{ll} \hline\hline
-Name & Command\\ \hline
-Chapter & \textbackslash\texttt{chapter\{\emph{Chapter name}\}}\\
-Section & \textbackslash\texttt{section\{\emph{Section name}\}}\\
-Subsection & \textbackslash\texttt{subsection\{\emph{Subsection name}\}}\\
-Subsubsection & \textbackslash\texttt{subsubsection\{\emph{Subsubsection name}\}}\\
-Paragraph & \textbackslash\texttt{paragraph\{\emph{Paragraph name}\}}\\
-Subparagraph & \textbackslash\texttt{paragraph\{\emph{Subparagraph name}\}}\\ \hline\hline
-\end{tabular}
-\end{table}
+\subsection{History of machine learning}%Är detta relevant? 
+Some history of old methods being used. Important milestones...
+Probabilistic models (Bayes)
+Regression models
+Support vector machines
 
-\section{Section} \label{Section_ref}
-\subsection{Subsection}
-\subsubsection{Subsubsection}
-\paragraph{Paragraph}
-\subparagraph{Subparagraph}
+\subsection{Machine learning today} %För att knyta an till vad vi skrev i intro:t så borde vi skriva lite mer om följande punkter: 
+Recommender Systems\\
+Collaborative Filtering\\
+Deep Learning\\
+Big Data\\
+
+\section{Purpose}
+Evaluate the performance of applying deep learning in the form of a recurrent neural network for individual user recommendations in discussion forums and social channels as an improvement over current methods which recommends the most popular content. By using a neural network, trained on users of a particular social platform (or platforms), an application should then be able to notify users that might be interested in the new content of the platform based on the network’s predictions. If time allows for it, the recurrent neural network could also be compared to other machine learning approaches to the same task. The neural network will be compared to a baseline to evaluate the model’s performance.
+
+\section{Scope}
+The scope of this project is to create a program that recommends users content that might interest them. People want to see things that are relevant to them, and the aim of this project is to offer the possibility for the users in a forum to get notified whenever content that they care about is uploaded.
+\\\\
+Some technical limitations need to be considered for the scope of the project. The main limitations are the availability of training data and the cost of computing power for training an artificial neural network with this data. Because of these limitations, the scope of the project is reduced to support a smaller number of users that can get recommendations than what might be necessary for a commercial implementation with perhaps millions of users. We will likely limit ourselves to some thousands of users as this adds flexibility to the experimentation with hyperparameters in terms of the time it will take for training.  
+\\\\
+One issue that arises when dealing with data of this kind is the ethical concern regarding integrity. It is not hard to imagine that a system that could tell whether or not something is of interest to a specific person could be abused. The system could perhaps discover areas of interest that a person would have wished to keep private, this is just one example of potentially many problems. Due to time constraints, research into what is ethical will not be considered. 
 

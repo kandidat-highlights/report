@@ -1,0 +1,33 @@
+\chapter{Method}%Är metod och utförande samma sak?
+
+\section{Deciding on a dataset}
+måste vara naturligt labeled
+\subsection{Ubuntu dialogue corpus}
+This data set consists of back and forth conversations between users. Even thought the dataset is large it is not natural labeled for our needs and it is not clear how training on back and forth conversations would help it prediction what users would find a post on the web interesting. The Ubuntu dialogue corpus was ultimately not used since the data was not suited to our task.
+\subsection{Reddit}
+\section{Gathering data}
+något om att deep ann:s behöver mycket data %Must be mentioned in theory part
+\section{Modeling as an RNN}
+\subsection{Tensorflow}%The explanation about tensorflow should be made in terminology, here we shall only name how we will use it.
+Tensorflow is a high level framework, developed by Google to give the possibility of developing machine learning applications without having a deep knowledge. %även om det är sant att man inte behöver vara ML proffs tycker jag det får oss att låta dumma% 
+\subsection{LSTM-network}
+\subsection{Scaling down}
+As by suggestion from our supervisor we will begin with a very small scale network, instead of having the number of users in the tens of thousands we will start with 2-5 users. The reasoning for this is it that it will now be easier to not just train the network but to also to analyse it. This is a common approach in machine learning (source Olof) and the hope is that whatever model works on the small scale will hopefully continue to perform when it is scaled up.    
+\subsection{Overfitting on purpose}
+Overfitting is something you want to avoid in the final model but can be useful in development. Overfitting is a result of having learnt the training data too well but the key here is that something has been learnt. If the model has learnt something you at least know you are on the right path, it is not making guesses at random. Overfitting is therefore the first milestone for our scaled down network. 
+\subsection{Scaling up}
+\subsection{Tuning hyperparameters}
+\section{Baseline}
+When deciding how well a model performs it is compared against a baseline. The baseline puts the accuracy of the model into some context. You might have an accuracy of 90\%, is that good or bad? You need one or more baselines to decide this. 
+\subsection{Random classifier}
+A random classifier is a model that given an input $x$ selects one of $n$ output values uniformly at random. This results in an expected accuracy of $\frac{1}{n}$. This is a baseline that any real life model needs to beat with confidence.
+\subsection{Collaborative filtering}
+%Flytta förklaringen till ordlista? 
+Collaborative filtering can be used in what is called recommender systems. The goal of a recommender system is to recommend users products that the user finds interesting or helpful. Collaborative filtering operates under the assumption that if Bob likes cats and dogs and Alice likes cats, Alice is more likely to also like dogs since Bob likes dogs and Alice share a interest with Bob. Collabortive filtering has found success in recommending items such as movies (netflix prize source). %Kanske något mer om hur vi använde detta som baseline%
+
+\subsection{N-gram}
+\section{Computing power restrictions} %Should 
+\section{Integration with an application}
+
+
+%Saker som man är också intressanta: Kolla upp variansen, debugg, hur vi hitta felet etc. 

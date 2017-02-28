@@ -4,11 +4,12 @@
 \documentclass[12pt,a4paper,twoside,openright]{report}
 \input{settings}
 
-\begin{document} 
 
+\begin{document}
 % COVER PAGE, TITLE PAGE AND IMPRINT PAGE
 \pagenumbering{roman}			% Roman numbering (starting with i (one)) until first main chapter
 \input{include/front/titlepage}
+ 
 
 % ABSTRACT
 \newpage
@@ -40,9 +41,24 @@
 \pagenumbering{arabic}			% Arabic numbering starting from 1 (one)
 \setlength{\parskip}{0pt plus 1pt}
 
+\clearpage
+
+
+
 % INTRODUCTION
 \input{include/introduction}
-
+%Diskutera datan:(notera det här är bara bajs så vi kan diskutera något senare, därför skriver jag på svenska //maxim)
+%Vi kunde få ut X antal interaktioner med trådar på reddit, där en interaktion motsvarar en downvote eller upvote.Varje interaktion är kopplad till en specific person i datasettet. Vi får också ut vilken subreddit tråden var skapad på, och eventuell innehåll(content).
+\\ %Den här kan typ vara i terminologi, eftersom vi endast förklarar hur datan ser ut.
+%I första modellen tog vi bara ut de "positiva" interaktioner, dvs alla med upvotes, och grupperade datan så att varje titel har ett set av användarna (i postgres). För att träna den första modellen var vi bara intresserade av titeln och användarna, dvs titel var vår inputdata och mängden av användarna var vår "target"/"labeled" data, dvs den outputten som vi vill att den ska få. 
+%tl;dr input = titel, output = användarna som är intresserade.
+\\
+%En annan ide är att även använda de negativa interaktioner(downvotes), man kan tolka det på olika sätt: en downvote kan vara att du är inte intresserad av det och då borde man straffa modellen mer om en användare ger en downvote på en titel, det andra sättet och tolka är på är att man är intresserad men håller inte med personen eller tycker inte om sättet någon beskrev det på, men själva ämnet är fortfarande intressant. Det leder till två olika modeller/approaches som man kan undersöka.
+\input{include/theory}
+\input{include/method}
+\input{include/results}
+Skriva om hur det gick overall, jämför hur det fungerade med/utan downvotes. vilka hyperparametrar fungerar bar osv.
+\input{include/conclusiondiscussion}
 % REFERENCES / BIBLIOGRAPHY
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Bibliography}
@@ -55,6 +71,9 @@
 \pagenumbering{Roman}			% Capitalized roman numbering starting from I (one)
 
 \input{include/back/appendix_1}
+
+
+
 
 
 \end{document}

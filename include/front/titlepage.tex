@@ -19,21 +19,21 @@
 
 % Cover text
 \mbox{}
-\vfill
+%\vfill
 \renewcommand{\familydefault}{\sfdefault} \normalfont % Set cover page font
-\textbf{{\Huge 	A Chalmers University of Technology 	\\[0.2cm] 
-				Bachelor's thesis template for \LaTeX}} 	\\[0.5cm]
-{\LARGE A Subtitle that can be Very Much Longer}\\[0.2cm]
+\begin{flushleft}
+\textbf{{\Huge \varthetitle}} 	\\[0.5cm]
+{\LARGE \varthesubtitle}\\[0.2cm]
 Bachelor of Science Thesis in Computer Science and Engineering \setlength{\parskip}{0.5cm}
 
-{\Large JOHN DOE} \setlength{\parskip}{1.9cm}
-
+{\Large JESPER JAXING, ALEXANDER HÅKANSSON, MAXIM GORETSKYY, GMAL TCHAEFA, AXEL OLIVECRONA, JONATAN ALMÉN} \setlength{\parskip}{1.9cm}\\
+\vfill
 Chalmers University of Technology \\
 University of Gothenburg \\
 Department of Computer Science and Engineering \\
 Göteborg, Sweden, June 2017
 
-
+\end{flushleft}
 %\renewcommand{\familydefault}{\rmdefault} \normalfont % Reset standard font
 \end{titlepage}
 
@@ -51,10 +51,14 @@ Göteborg, Sweden, June 2017
 \thispagestyle{empty}
 \begin{center}
 	\large Bachelor of Science Thesis\\[4cm]		% Report number given by department 
-	\textbf{\large An Informative Headline describing the Content of the Report} \\[0.7cm]
-	{\large A Subtitle that can be Very Much Longer if Necessary}\\[1cm]
-	\textsc{{\large Some Author}}\\
-	\textsc{{\large Other Author}}\
+	\textbf{\large \varthetitle} \\[0.7cm]
+	{\large \varthesubtitle}\\[1cm]
+	{\large JESPER JAXING}\\
+	{\large ALEXANDER HÅKANSSON} \\
+	{\large MAXIM GORETSKYY} \\
+	{\large GMAL TCHAEFA } \\
+	{\large AXEL OLIVECRONA} \\
+	{\large JONATAN ALMÉN} \
 	
 	\vfill	
 	% Logotype on titlepage	
@@ -65,7 +69,7 @@ Göteborg, Sweden, June 2017
 	\end{figure}	\vspace{5mm}	
 	
 	Department of Computer Science and Engineering \\
-	\textsc{Chalmers University of Technology} \\
+	CHALMERS UNIVERSITY OF TECHNOLOGY \\
 	University of Gothenburg \\[0.5cm]
 	Göteborg, Sweden 2017 \\
 \end{center}
@@ -75,12 +79,17 @@ Göteborg, Sweden, June 2017
 \newpage
 \thispagestyle{plain}
 %\vspace*{4.5cm}
-\textbf{An Informative Headline describing the Content of the Report}\\
-A Subtitle that can be Very Much Longer if Necessary\\
-SOME AUTHOR\\
-OTHER AUTHOR\setlength{\parskip}{0.7cm}
+\textbf{\varthetitle}\\
+\varthesubtitle
+\vspace*{0.5cm}\\
+JESPER JAXING\\
+ALEXANDER HÅKANSSON\\
+MAXIM GORETSKYY\\
+GMAL TCHAEFA\\
+AXEL OLIVECRONA\\
+JONATAN ALMÉN\setlength{\parskip}{0.7cm}
 
-\copyright ~ SOME AUTHOR, OTHER AUTHOR, 2017 \setlength{\parskip}{0.7cm}
+\copyright ~ JESPER JAXING, ALEXANDER HÅKANSSON, MAXIM GORETSKYY, GMAL TCHAEFA, AXEL OLIVECRONA, JONATAN ALMÉN, 2017 \setlength{\parskip}{0.7cm}
 
 Examiner: Name, Department \setlength{\parskip}{1cm}
 
@@ -92,7 +101,7 @@ Sweden\\
 Telephone: +46 (0)31 772 1000 \setlength{\parskip}{0.5cm}
 
 \vfill
-The Author grants to Chalmers University of Technology and University of Gothenburg the non-exclusive right to publish the Work electronically and in a non-commercial purpose make it accessible on the Internet.\\
+The Author grants to Chalmers University of Technology and University of Gothenburg the non-exclusive right to publish the Work electronically and in a non-commercial purpose make it accessible on the Internet.\\\\
 The Author warrants that he/she is the author to the Work, and warrants that the Work does not contain text, pictures or other material that violates copyright law.\\\\
 The Author shall, when transferring the rights of the Work to a third party (for example a publisher or a company), acknowledge the third party about this agreement. If the Author has signed a copyright agreement with a third party regarding the Work, the Author warrants hereby that he/she has obtained any necessary permission from this third party to let Chalmers University of Technology and University of Gothenburg  store the Work electronically and make it accessible on the Internet.
 
