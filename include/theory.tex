@@ -1,34 +1,59 @@
 \chapter{Theory}
-\section{Optimisation}
-\subsection{Gradient descent, tractability}%Tractability?
-Gradient descent is an optimisation method where one calculates the gradient of a function and then takes a small step in the opposite direction of the gradient, this is repeated until one has found a local (or global) minimum i.e. the gradient is 0. It has been shown that this works well for convex(?) functions[source] since convex functions have the property that every local minimum is also a global minimum . However, an artificial neural network is not a convex function, but much more complicated.[source] Therefore gradient descent should not be a good method to use in this case, but empirical proof shows that it work well. %Vi ska inte ge vår åsikt här, räcker att säga att Det finns emperiska bevis som säger att gradient descent är bra och ha källa.
-When talking about artificial neural networks it is the gradient of the error function that is interesting. Calculating the gradient of the error function with regards to the weights of the network will give an indication as to whether to decrease or increase the weights. This is how the network learns what is good and what is bad, by changing its weights to minimise the error function.
-\subsection{Backpropagation}
-Backpropagation is a method used when training ANNs. When a you feed a vector into the network it will propagate forward until in reaches the last layer and presents an output. The output is then compared to the desired result via an error function to determine how well the network performed on the given output. It is now that backpropagation will start. Each neural will be assigned an error, the error will then propagate backwards through the network and the weights will be updated. How the weights are updated depends on what optimisation method is used.
+This chapter will discuss some of the important theory behind artificial neural networks and how they will be used to achieve the goal of the project.
+
 \section{Classification}
 The most common use for machine learning is classification. It is the problem of given a new data point classify it as one of the k sets that the machine learning algorithm knows. This problem can be solved with most machine learning models. It can be a quite simple problem and often do not require the use of an ANN. %Är det ett verkligen ett "simple problem", beror ju på vad du vill klassificera
 \section{Artificial Neural Networks (ANN)}
-An Artificial neural network is an attempt to image the workings of a human brain. The network is constructed of nodes which are structured in layers. The nodes take some input and does something with it and feeds it to the next layer, until it gets to the final layer and outputs something interesting. Between the nodes there are weights, this is what the ANN learns. By using gradient descent and back propagation to change the weights to minimise the error the network will give the right answer more often. 
+An Artificial neural network is an attempt to image the workings of a human brain. The network is constructed of nodes which are structured in layers. The nodes take some input and does something with it and feeds it to the next layer, until it gets to the final layer and outputs something interesting, usually a vector of probabilities mapped to the known classes. Between the nodes there are weights, these are the only none constants in the network and are what will change in order to make the network learn.
 
-\subsection{Activation function}
-The activation function controls how much of the output from a node is ON. For example if using signum(x) as our activation function then all positive outputs are ON and all negative are off. In order to achieve better results one has to allow more sophisticated outputs than simple ON/OFF-modes. By using non-linear functions you can squash/scale the output. One of the requirements for the network to learn well is to have an activation function that is differentiable in many points.
-\subsubsection{Sigmoid} %Vi kan max ha 3 nivåer, så vi får itemizea denna
-Sigmoid function is a non-linear function defined by $f(x)=\frac{1}{1+exp(-x)}$ that scales the output between [-1, 1]. 
-\subsubsection{ReLU}
-ReLU function is a non-linear function defined by $f(x) = max(0,x)$. This function has the benefit of being unbounded as opposed to sigmoid for example whose domain is the interval $[-1, 1]$.  
-\subsubsection{Softmax}
-Softmax function is defined by $f(x_j) = \frac{e^{x_j}}{\sum_{i=1}^{n} e^{x_i}} $ where $\mathbf{x}$ is a vector of $n$ outputs. Softmax scales the vector entries to be between 0 and 1, while making them sum to 1 because of the normalisation.
+[IMAGE OF ANN]
 
-\section{Recurrent Neural Network (RNN)}
-A recurrent neural network is network that takes time into account. It accounts for time in the sense that the current output is dependent on the previous. This time dependency is often depicted as an ANN that outputs to itself, in reality this is not very useful since it makes the methods for learning (backpropagation) useless. Instead of using a recursive unit, recurrent nets are often modelled as one unit outputing to the next unit in the layer, this unit takes some new input and the output from the previous unit. This processes is called unfolding.%recursive unit? Wut?
-\subsection{LSTMs}
+\section{Training and Optimisation} %Training and optimisation
+An ANN is trained by giving to some in data and comparing the out data with the correct answer by applying some error function. This error is what is to be minimised to make the network learn, and can be achieved by applying backpropagation and some optimisation method, e.g. Gradient descent.
+
+\subsection{Gradient descent, tractability}%Tractability? Borde vi ha ADAM istälelt?
+Gradient descent is an optimisation method where one calculates the gradient or diffirential of a function and then takes a small step in the direction of the gradient that minimises or maximises the function, this is repeated until one has found a local (or global) minimum/maximum i.e. the gradient is 0. It has been shown that this works well for convex(?) functions[source] since convex functions have the property that every local minimum is also a global minimum . However, an artificial neural network is not a convex function, but much more complicated.[source] Therefore gradient descent should not be a good method to use in this case, but empirical proof shows that it work well. %Vi ska inte ge vår åsikt här, räcker att säga att Det finns emperiska bevis som säger att gradient descent är bra och ha källa.
+When talking about artificial neural networks it is the gradient of the error function that is interesting. Calculating the gradient of the error function with regards to the weights of the network will give an indication as to whether to decrease or increase the weights. The network learns what is good and what is bad by changing its weights to minimise the error function.
+
+\subsection{Backpropagation and how it is used}
+Backpropagation is a method used when training ANNs. When you feed a vector into the network it will propagate forward until in reaches the last layer and presents an output. The output is then compared to the desired result via an error function to determine how well the network performed on the given input. Each neural will be assigned an error, the error will then propagate backwards through the network and the weights will be updated. How the weights are updated depends on what optimisation method is used.
+
+
 \section{Error functions} %Tycker det borde ligga under ANN delen?
+When working with machine learning there is a need to be able to measure the error of a certain output. Measuring the error can be used to evaluate the performance of a machine learning technique but when working with artificial neural networks it is also an essential part of optimising the network. In the case of artificial neural network the measured error is used to determine how the network should change in order to perform better. There are a lot of common methods used for measuring errors and different error functions are more suited for some problems.
+
 \subsection{Mean Squared Error}
-The mean squared error function is defined by: $E=\frac{1}{2n}\sum_{i=1}^{n} (target_i - output_i)^2$ where $n$ is amount of inputs that you give to the error function. 
+\begin{equation}\label{eq:meansquared}
+    E=\frac{1}{2n}\sum_{i=1}^{n} (target_i - output_i)^2
+\end{equation}
+The mean squared error function is defined as shown in equation \ref{eq:meansquared} where $n$ is amount of inputs that you give to the error function, $output_i$ is an output from the system and $target_i$ is the actual expected output.
+
 \subsection{Cross Entropy}
 Cross entropy function is defined by XXXXX. 
 
-\subsection{Downvote and Upvotes} %Borde inte finnas här, tillhör inte teorin. En del av metod eller diskussion.
+\subsection{LogSumExp}
+asdasd
+
+\subsection{Downvote and Upvotes} %Borde inte finnas här, tillhör inte teorin. En del av metod eller diskussion. 
 The network is currently learning to predict which reddit users are interested in a given title of a reddit post. It learns this by looking at the interactions that users have had with similar posts. If user have upvoted a post that clearly means that the user found the post enjoyable or interesting, but what if the user has downvoted the post or not interacted at all with it? If a user have downvoted a post that could mean one of two things; either the user did not like the content and do not what to see similar posts again or the user find the post interesting but does not agree with the point of view of the poster, in this case the user most likely want to see more similar posts. Similarly with no interaction, a user might simply not have seen the post not liked it or not cared enough to upvote it. This is a problem of social studies, how do user use their downvote?
-\section{Training}
-Kanske något om hur man kan utnyttja downvotes
+
+\section{Activation functions}
+The activation function controls how much of the output from a node is ON. For example if using signum(x) as our activation function then all positive outputs are ON and all negative are off. In order to achieve better results one has to allow more sophisticated outputs than simple ON/OFF-modes. By using non-linear functions you can squash/scale the output. One of the requirements for the network to learn well is to have an activation function that is differentiable in many points.
+
+\subsection{Logistic function}
+The logistic function is a non-linear function with a sigmoid curve defined by \ref{eq:sigmoid} that scales the output between $[0, 1]$. 
+\begin{equation}\label{eq:sigmoid}
+    f(x)=\frac{1}{1+exp(-x)}
+\end{equation}
+\subsection{ReLU}
+ReLU function is a non-linear function defined by $f(x) = max(0,x)$. This function has the benefit of being unbounded as opposed to sigmoid for example whose domain is the interval $[0, 1]$.  
+\subsection{Softmax}
+Softmax function is defined by $f(x_j) = \frac{e^{\vec{x}_j}}{\sum_{i=1}^{n} e^{\vec{x}_i}} $ where $\vec{x}$ is a vector of $n$ outputs. Softmax scales the vector entries to be between 0 and 1, while making them sum to 1 because of the normalisation.
+
+\section{Recurrent Neural Networks (RNN)}
+A recurrent neural network is network that takes time into account. It accounts for time in the sense that the current output is dependent on the previous. This time dependency is often depicted as an ANN that outputs to itself, in reality this is not very useful since it makes the methods for learning (backpropagation) useless. Instead of using a recursive unit, recurrent nets are often modelled as one unit outputing to the next unit in the layer, this unit takes some new input and the output from the previous unit. This processes is called unfolding.%recursive unit? Wut?
+\subsection{Long Short-Term Memory (LSTM)}
+Skriv om vad en LSTM är
+
+\subsection{Gated Recurrent Unit (GRU)}
+Skriv eventuellt om GRUs
