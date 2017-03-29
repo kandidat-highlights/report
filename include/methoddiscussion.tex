@@ -1,0 +1,19 @@
+\chapter{Method discussion}%Tänker att detta är okej, rapport Hazel hade också sån chapter, och jag tycker den behövs. Åsikter? 
+\section{Filter Bubble}
+An upcoming issue with recommender systems in general is filter bubble.
+Filter bubble is a consequence when training the networks on user data. The problem is that users will only be recommended similar information/items to what they have previously liked/encountered, meaning that the users will stay inside their bubble. \\
+One of the simple countermeasures against this is if the users themselves are aware of this and actually browse information outside of their comfort zone. This additional information about users will hopefully be taken into account when training the network. \\
+
+\section{Dataset}\todo{consider if this is the right place for this}
+Similar issues may arise if a user likes too general information. It will be hard to recommend specific things to that user, because a general view would result in all information being recommended to the user. This is more of an issue of the dataset that is being used for the training of the network. \todo{Discuss variance in our dataset here maybe?}
+\\
+%not having more personal data about the user
+The Reddit dataset that is used in this project, and Reddit in general, does not hold any information about the users. This can be seen as a drawback compared to other platforms, for example Amazon where users have information about their interests, social media and occupation, but also a short bio. \todo{Maybe give source of Amazon.com}\\
+The project does not cover data with access to personal information, in order to do this a new dataset has to be found or labeled manually and for now, will be seen as out of scope.
+
+
+\section{Performance Measure}%How we calculate precision/validation top k. Consequences etc
+We are choosing top 1 user for now. A problem with this blablabla \todo{write more}
+
+
+\todo{How we treat upvotes/downvotes as interesting, this is in method already. Consider moving?}

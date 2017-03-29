@@ -1,59 +1,107 @@
 \chapter{Theory}
 This chapter will discuss some of the important theory behind artificial neural networks and how they will be used to achieve the goal of the project.
 
-\section{Classification}
-The most common use for machine learning is classification. It is the problem of given a new data point classify it as one of the k sets that the machine learning algorithm knows. This problem can be solved with most machine learning models. It can be a quite simple problem and often do not require the use of an ANN. %Är det ett verkligen ett "simple problem", beror ju på vad du vill klassificera
+\section{Classification of data}
+A common use of machine learning is classification. It is the task of classifying a given data point as belonging to one of $k$ sets based of previously observed data. Classification can be visually be seen as a graph of datapoints with a curve separating the $k$ sets, this curve is also referred to as decision boundary. There are a lot of different machine learning techniques to solve this problem, one example of this is the Naïve Bayes classifier \parencite{rish2001empirical}. 
+\\\\
+Classification of data typically requires extraction of features that can be compared - feature engineering, as this is called, is a manual process that usually requires extensive domain knowledge. However, when using artificial neural networks, the process of feature engineering can be omitted  thus making it easier to model more complex problems \parencite{ronan2011nlp}.
+
 \section{Artificial Neural Networks (ANN)}
-An Artificial neural network is an attempt to image the workings of a human brain. The network is constructed of nodes which are structured in layers. The nodes take some input and does something with it and feeds it to the next layer, until it gets to the final layer and outputs something interesting, usually a vector of probabilities mapped to the known classes. Between the nodes there are weights, these are the only none constants in the network and are what will change in order to make the network learn.
+An artificial neural network is a computation method inspired by a biological neural network \parencite{lippmann1987introduction}. The ANN can be visualised as a directed and acyclic graph. The network is constructed of artificial neurons which are structured in layers - these neurons are represented as nodes in the graph. Each neuron represents a function that takes some input from other nodes and produces an output. The input data to the network is represented by a vector $\vec{x}$ with $n$ features.
+\begin{equation}
+    \vec{x} = [x_1, x_2, x_3, \dots , x_n]^T
+\end{equation}
+The edges in the network have weights and  each weight represents a connection between two neurons. The behaviour of these connections are important when feeding data through the network.
+\\\\
+The input to a layer is the combination of the output from a previous layer and the weights between those two layers (usually also with some bias term added). The weights are used to propagate input to subsequent layers. A convenient way to represent weights between two layers $j$ and $k$ is by a matrix, $W_{jk}$ where each element is the weight between a neuron in layer $k$ and a neuron in layer $j$, where $k<j$. Let $\vec{z_j}$ denote the input to layer $j$ where $W_{jk}$ are weights to layer $j$ from layer $k$ and $\vec{x_k}$ is the output from layer $k$. The vector $\vec{b}$ is a bias term that is usually added for more degrees of freedom. 
+\begin{equation}
+    \vec{z_j} = \vec{W_{jk}} \cdot \vec{x_k} + \vec{b}
+\end{equation}
+Let $\vec{y_i}$ denote the output of the layer $i$. For the first layer (input layer) $\vec{y_1}=\vec{x}$. The output, $\vec{y_i}$, of a layer $i$ is the combination between the input function $\vec{z_i}$ and some activation function $f(\vec{z})$. Activation functions are described in further detail in section \ref{activationfunction} but can in summary be seen as a way to scale the output.
+\begin{equation}
+    \vec{y_i} = f(z_i)
+\end{equation}
+Once the data has been propagated to the last layer, an error function will be used to measure the error of the model by comparing the final output/prediction with the expected output. The details about error functions can be found in section \ref{errorfunction}. Furthermore, the results of the error functions are used when training the network, which is explained in section \ref{trainingoptimisation}
 
 [IMAGE OF ANN]
 
-\section{Training and Optimisation} %Training and optimisation
-An ANN is trained by giving to some in data and comparing the out data with the correct answer by applying some error function. This error is what is to be minimised to make the network learn, and can be achieved by applying backpropagation and some optimisation method, e.g. Gradient descent.
-
-\subsection{Gradient descent, tractability}%Tractability? Borde vi ha ADAM istälelt?
-Gradient descent is an optimisation method where one calculates the gradient or diffirential of a function and then takes a small step in the direction of the gradient that minimises or maximises the function, this is repeated until one has found a local (or global) minimum/maximum i.e. the gradient is 0. It has been shown that this works well for convex(?) functions[source] since convex functions have the property that every local minimum is also a global minimum . However, an artificial neural network is not a convex function, but much more complicated.[source] Therefore gradient descent should not be a good method to use in this case, but empirical proof shows that it work well. %Vi ska inte ge vår åsikt här, räcker att säga att Det finns emperiska bevis som säger att gradient descent är bra och ha källa.
-When talking about artificial neural networks it is the gradient of the error function that is interesting. Calculating the gradient of the error function with regards to the weights of the network will give an indication as to whether to decrease or increase the weights. The network learns what is good and what is bad by changing its weights to minimise the error function.
-
-\subsection{Backpropagation and how it is used}
-Backpropagation is a method used when training ANNs. When you feed a vector into the network it will propagate forward until in reaches the last layer and presents an output. The output is then compared to the desired result via an error function to determine how well the network performed on the given input. Each neural will be assigned an error, the error will then propagate backwards through the network and the weights will be updated. How the weights are updated depends on what optimisation method is used.
-
-
-\section{Error functions} %Tycker det borde ligga under ANN delen?
-When working with machine learning there is a need to be able to measure the error of a certain output. Measuring the error can be used to evaluate the performance of a machine learning technique but when working with artificial neural networks it is also an essential part of optimising the network. In the case of artificial neural network the measured error is used to determine how the network should change in order to perform better. There are a lot of common methods used for measuring errors and different error functions are more suited for some problems.
-
-\subsection{Mean Squared Error}
-\begin{equation}\label{eq:meansquared}
-    E=\frac{1}{2n}\sum_{i=1}^{n} (target_i - output_i)^2
-\end{equation}
-The mean squared error function is defined as shown in equation \ref{eq:meansquared} where $n$ is amount of inputs that you give to the error function, $output_i$ is an output from the system and $target_i$ is the actual expected output.
-
-\subsection{Cross Entropy}
-Cross entropy function is defined by XXXXX. 
-
-\subsection{LogSumExp}
-asdasd
-
-\subsection{Downvote and Upvotes} %Borde inte finnas här, tillhör inte teorin. En del av metod eller diskussion. 
-The network is currently learning to predict which reddit users are interested in a given title of a reddit post. It learns this by looking at the interactions that users have had with similar posts. If user have upvoted a post that clearly means that the user found the post enjoyable or interesting, but what if the user has downvoted the post or not interacted at all with it? If a user have downvoted a post that could mean one of two things; either the user did not like the content and do not what to see similar posts again or the user find the post interesting but does not agree with the point of view of the poster, in this case the user most likely want to see more similar posts. Similarly with no interaction, a user might simply not have seen the post not liked it or not cared enough to upvote it. This is a problem of social studies, how do user use their downvote?
-
-\section{Activation functions}
-The activation function controls how much of the output from a node is ON. For example if using signum(x) as our activation function then all positive outputs are ON and all negative are off. In order to achieve better results one has to allow more sophisticated outputs than simple ON/OFF-modes. By using non-linear functions you can squash/scale the output. One of the requirements for the network to learn well is to have an activation function that is differentiable in many points.
+\section{Activation functions}\label{activationfunction}
+The activation function controls how much of the output from a node is sent to the next layer. Binary outputs can only represent two states, ON or OFF. In order to achieve better results one has to allow more sophisticated outputs than binary. By using non-linear functions you can scale the output, and find non-linear decision boundaries. Different activation functions can be used for different purposes in the same artificial neural network, it is not necessary to choose only one. When using a certain activation function as the final output function though it can be important to select an error function that works well with it.
 
 \subsection{Logistic function}
-The logistic function is a non-linear function with a sigmoid curve defined by \ref{eq:sigmoid} that scales the output between $[0, 1]$. 
+The logistic function is a non-linear function with a sigmoid curve defined by equation \ref{eq:sigmoid} that scales the output between $[0, 1]$. A sigmoid function is a function with an \textit{S} shape.
 \begin{equation}\label{eq:sigmoid}
     f(x)=\frac{1}{1+exp(-x)}
 \end{equation}
-\subsection{ReLU}
-ReLU function is a non-linear function defined by $f(x) = max(0,x)$. This function has the benefit of being unbounded as opposed to sigmoid for example whose domain is the interval $[0, 1]$.  
-\subsection{Softmax}
-Softmax function is defined by $f(x_j) = \frac{e^{\vec{x}_j}}{\sum_{i=1}^{n} e^{\vec{x}_i}} $ where $\vec{x}$ is a vector of $n$ outputs. Softmax scales the vector entries to be between 0 and 1, while making them sum to 1 because of the normalisation.
+By using the logistic function in the final layer as the output function it is possible to interpret the output as probabilities. This particular function is especially useful for multi-class classifications (where some input can be classified as belonging to more than one class). When using the logisitc function like this it is common to use the negative log-likelihood error function as this is particularly useful for multi-class classifications (källa).
+
+\subsection{ReLU function}
+The ReLU function is a non-linear function defined by equation \ref{eq:ReLU}. This function has the benefit of being unbounded as opposed to sigmoid for example whose range is the interval $[0, 1]$. The ReLU function has become popular in the past few years due to its performance compared to other activation functions. \parencite{glorot2011deep}
+
+\begin{equation}\label{eq:ReLU}
+    f(x) = max(0,x)
+\end{equation}
+\subsection{Softmax function}
+The softmax function is defined by equation \ref{eq:softmax} where $\vec{x}$ is a vector of $n$ outputs. Softmax scales the vector entries to be between $[0,1]$, while normalising them all to sum to 1.
+
+\begin{equation} \label{eq:softmax}
+    f(x_j) = \frac{e^{\vec{x}_j}}{\sum_{i=1}^{n} e^{\vec{x}_i}}
+\end{equation}
+
+When using the softmax function in the final layer of the network to create an output it has been shown that the cross entropy error function gives a better accuracy compared to others \parencite{dunne1997pairing,golik2013cross}. By using the softmax activation function the output can be interpreted as normalised probabilities between the $n$ output classes. Because of the normalisation this becomes useful for classification where there is only one correct true class.
+
+\section{Error functions} \label{errorfunction}
+% When working with machine learning there is a need to be able to measure the error of a certain output. Measuring the error can be used to evaluate the performance of a machine learning technique but when working with artificial neural networks it is also an essential part of optimising the network. In the case of artificial neural network the measured error is used to determine how the network should change in order to perform better. There are a lot of common methods used for measuring errors and different error functions are more suited for some problems.
+The error functions in neural networks are used to compare the predicted output with the actual output. These functions are also used when training the network in order to minimise the error, more details in section \ref{trainingoptimisation}
+
+\begin{itemize}
+    \item \textbf{Cross Entropy}
+    Cross-entropy function is often used as an error function because of its performance when doing the training of the network with backpropagation. (see section \ref{backpropagation} for details on backpropagation). The function is defined by the following:\\
+    \begin{equation} \label{eq:crossentropy}
+        E_m = \frac{1}{m}\sum_{k=1}^{m} [t_k * ln(y_k) +(1-t_k)ln(1-y_k) ]
+    \end{equation}
+    Reason behind popularity is that the derivative with respect to the weights is proportional to the difference between the predicted value and actual value, leading to better performance of the network due to lower stagnation period.    \parencite{nasr2002cross}
+    
+    \item \textbf{Negative Log-Likelihood}
+    \todo{TODO INSERT FUNC}
+\end{itemize}
+
+\section{Training and optimisation} \label{trainingoptimisation}
+Training and optimisation in machine learning is the process of learning from data. The way a certain machine learning technique learns from data usually differs but the training and optimisation of an artificial neural network can be seen as an optimisation problem. First an error function needs to be defined that determines how much a certain prediction for a data point is wrong compared to the true classification of that data point. The optimisation problem then becomes to find the weights and biases in the artificial neural network that minimises the error. This can be achieved by applying backpropagation and some optimisation method, e.g. Gradient descent. The process of learning from some previously classified data is called supervised learning.
+
+\subsection{Gradient descent optimisation}
+Gradient descent is an iterative algorithm where the gradient of a function is calculated in steps. The computed gradient is used to move towards the minimum/maximum of the function. This is repeated until the local or global minimum/maximum of the function is found. It has been shown that gradient descent has a good running time for convex functions \parencite{convexSGD}, however there are no guarantees that an artificial neural network will be convex. There is a specialised and efficient implementation of gradient descent called \textit{Adam} \parencite{adamoptimizer} that is commonly used for artificial neural networks. When using the Adam optimiser for artificial neural networks the gradient of the error function is calculated to minimise the error of the networks output.
+
+\subsection{Backpropagation and how it is used}\label{backpropagation}
+Backpropagation is a method used when training ANNs. When you feed a vector into the network it will propagate forward until in reaches the last layer and presents an output. The output is then compared to the desired result via an error function to determine how well the network performed on the given input. Each neuron will be assigned an error, the error will then propagate backwards through the network and the weights will be updated. How the weights are updated depends on what optimisation method is used.
+
+\subsection{Overfitting}
+Overfitting can be described by a state of the model where the network does not generalise too well, meaning that the network is too accustomed to the training data and its details. This phenomenon results in bad accuracy of the network on the unseen data. This is a common problem if the network has too many parameters that can describe the training data instead of capturing the general idea of the data. \\
+%Insert den superfina grafen av validation och training error här senare med källa.
+\todo{INSERT GRAPH HERE} \\
+As seen in the graph the network is performing better and better for both training and validation sets. However, it reaches a point where the validation error starts going up. That point is where the overfitting has occurred. The training error is still decreasing meaning that the network keeps learning on the training data instead of generalising from it. 
+
+\subsection{Regularisation}
+Regularization is seen as a set of techniques in order to combat the overfitting problem. These techniques increase the performance of the network taking overfitting into account. Example of two widely used techniques:
+\begin{itemize}%Eventuellt lägga till L2-Norm? 
+\item \textbf{Dropout} can be thought of as high altitude training, but instead of limiting the athletes oxygen it is the networks neurons that are limited. During training an amount of random neurons are chosen and deactivated. This means that the network have to teach other neurons to do the generalisation that the deactivated neuron previously did. When it comes to validating or actually use the network all neurons are again activated this gives the network more degrees of freedom to work with than it had during the training and thus making it easier for it to generalise.  %Write more about them
+\item \textbf{Early stopping} is a regularisation method where the goal is to stop the training when the network starts to overfit. Early stopping can be implemented by calculating the validation error after each epoch of training, when the validation error begins to go up the network should stop training. Usually one wants to run a few epochs after the validation error rises just to make sure that it is consistently rising, when one are sure that the network is overfitting the network is rolled back to where it started to overfit and the training interrupted.
+\item \textbf{L2-norm} asdasdsd
+\end{itemize}
+
 
 \section{Recurrent Neural Networks (RNN)}
-A recurrent neural network is network that takes time into account. It accounts for time in the sense that the current output is dependent on the previous. This time dependency is often depicted as an ANN that outputs to itself, in reality this is not very useful since it makes the methods for learning (backpropagation) useless. Instead of using a recursive unit, recurrent nets are often modelled as one unit outputing to the next unit in the layer, this unit takes some new input and the output from the previous unit. This processes is called unfolding.%recursive unit? Wut?
-\subsection{Long Short-Term Memory (LSTM)}
-Skriv om vad en LSTM är
+A recurrent neural network is network that takes time into account. It accounts for time in the sense that the current output is dependent on the previous. This time dependency is often depicted as an ANN that outputs to itself, in reality this is not very useful since it makes the methods for learning (backpropagation) useless. Instead of using a recursive unit, recurrent nets are often modelled as one unit outputting to the next unit in the layer, this unit takes some new input and the output from the previous unit. This processes is called unfolding.%recursive unit? Wut?
 
-\subsection{Gated Recurrent Unit (GRU)}
+
+\subsection{Backpropagation Through Time}
+
+\subsection{Long Short-Term Memory (LSTM)}
+Skriv om vad en LSTM är \parencite{LSTMdefined}
+
+\subsection{Gated Recurrent Unit (GRU)}\todo{Avvakta med denna tills vi faktiskt ska använda dem}
 Skriv eventuellt om GRUs
+
+\section{Alternatives to ANN}
+\subsection{N-gram based models}
+blabla

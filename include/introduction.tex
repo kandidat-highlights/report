@@ -9,28 +9,34 @@ On today’s social platforms notifications are indiscriminate in that it is har
 \\\\
 Similar works have been done in other fields like electronic commerce. Amazon uses a technique called recommender systems to recommend new items for their users \parencite{amazonfiltering}. Their recommender system is not based on deep learning but rather compares the similarity between new products and products that a user has previously bought or rated \parencite{amazonfiltering}.
 
-\subsection{History of machine learning}%Är detta relevant? 
-Some history of old methods being used. Important milestones...
-Probabilistic models (Bayes)
-Regression models
-Support vector machines
-
-\subsection{Machine learning today} %För att knyta an till vad vi skrev i intro:t så borde vi skriva lite mer om följande punkter: 
-Recommender Systems\\
-Collaborative Filtering\\
-Deep Learning\\
-Big Data\\
-
 \section{Purpose}
-The aim of this project is to evaluate the performance of applying deep learning in the form of a recurrent neural network to notify user of new, to them interesting, content. This in contrast to currently used methods which recommends the most popular content. By using a neural network, trained on users of a particular social platform (or platforms), an application should then be able to notify users that might be interested in the new content of the platform based on the network’s predictions. 
+The aim of this project is to evaluate the performance of using deep recurrent neural networks to do personalised recommendations of content for users on social platforms. By using a neural network trained for this task an application should then be able to use its predictions to individually notify users when, to them, interesting content is published.
 
-%If time allows for it, the recurrent neural network could also be compared to other machine learning approaches to the same task. The neural network will be compared to a baseline to evaluate the model’s performance.
+\section{Problem Description}
+To complete the purpose of the project the correlation between some content on the platform, and a users' interest needs to be modelled. This will be attempted using a artificial neural network. In order to do successfully model this problem there are a number of factors that must be considered. First of all, in order to use an artificial neural network a dataset which can be used for training needs to be acquired (SOURCE?). When a dataset is obtained, the ANN must be modelled to capture the relation between the contents of a text and a users interest. The modelling is a key part of the problem where a lot of experimentation with hyperparameters is needed. The number of layers, their sizes and different functions in the network needs to be examined. Once an optimal performance has been achieved it also needs to be compared with some baseline in order to evaluate whether this method is good in practice or not.
+
+\subsection{Dataset}
+Out of all datasets available not all are suited to the task. The dataset needs satisfy the following constraints: sufficiently large, naturally labelled, there is some underlying structure that can be learnt.
+
+\subsection{Hyperparameters}
+The hyperparameters for the ANN will in the end determine its performance. This is since the hyperparameters determine characteristics of the ANN - its shape, size and behaviour. Some of these hyperparameters that needs to be examined are described below:
+
+\begin{itemize}
+    \item Depth of network, how many layers the network needs
+    \item Bredth of layers, how many nodes each layer has
+    \item Size of embedding matrix
+    \item Learning rate
+\end{itemize}
+
+\subsection{Baseline}
+When evaluating the performance of the network one or more baselines are needed as reference points. It not sufficient to say that the model simply \textit{performs well}, if there is no context \textit{well} could mean just about anything. It is therefore important to have one more or baselines to serve as references.
 
 \section{Scope}
-The scope of this project is to create a program that recommends users content that might interest them. People want to see things that are relevant to them, and the aim of this project is to offer the possibility for the users in a forum to get notified whenever content that they care about is uploaded. %Detta känns som en upprepning av syftet.
+This project will evaluate the possibilities of using deep learning to accurately be able to recommend users of a social platform that will be interested in new content posted on the platform.
+
+\subsection{Limitations}
+This project will be mostly scientific and will not focus on business applications of the problem.
 \\\\
-Some technical limitations needs to be considered for the scope of the project. The main limitations are the availability of training data and the cost of computing power for training an artificial neural network with this data. Because of these limitations, the scope of the project is reduced to support a smaller number of users that can get recommendations than what might be necessary for a commercial implementation with perhaps millions of users. We will likely limit ourselves to some thousands of users as this adds flexibility to the experimentation with hyperparameters in terms of the time it will take for training.  
+Due  to  technical  limitations  regarding  computing  power  and  available  data  the number of users that will be considered when recommending will be smaller than what would likely be desired in a commercial implementation. This  is  to  make  the  training  of  the  network  take  less  time  and  thereby make it possible to perform more experiments. The total number of users that will be considered will be fixed to contain the initial number of users and a buffer for new users. When adding a new user the model remains trained, and only needs to learn from the new user’s data.
 \\\\
 One issue that arises when dealing with data of this kind is the ethical concern regarding integrity. It is not hard to imagine that a system that could tell whether or not something is of interest to a specific person could be abused. The system could perhaps discover areas of interest that a person would have wished to keep private, this is just one example of potentially many problems. Due to time constraints, research into what is ethical will not be considered. 
-
-%Lägga in att vi bara kommer ta hänsyn till LSTM(ej GRU), ADAM och andra områden vi vet vi inte kommer undersöka?
