@@ -1,17 +1,57 @@
-\chapter{Method}%Är metod och utförande samma sak?
-This chapter will describe the workprocess of this project and what has been done.
-\section{Deciding on a dataset}
-The first step to training a artificial neural network is to find a good source of data to learn from. Since ANN is a supervised learning technique it saves a lot of time if the data is labelled when fetched or that it automatically can be labelled by some relatively simple computer program. A dataset that is useful for ANN is very large, a small data set might range from 30 000 entries corresponding to 3 0000 labels, finding those labels manually would be extremely time consuming.
+\chapter{Method}
+This chapter will describe the work process of this project. It will describe what has been done and discuss the decisions taken.
 
-We considered two datasets, Ubuntu Dialogue Corpus and Reddit data. The ubuntu set contained forum posts with back and forth discussion whereas the reddit set contained only the original post but had the possibility to extract which users up voted and down voted that post. The fact that the reddit set had up-votes and down-votes lead to the choosing of that dataset since these votes could be seen as labels and thus be used when classifying. 
+\section{Deciding on a dataset}\label{sec:deciding_dataset}
+As described in the initial problem description, deciding on a dataset is essential for the project to proceed. A first step was thus to find a dataset which satisfies the constraints presented in section \ref{sec:select_dataset}. This was needed as a first step since an artificial neural network needs a good source of data to learn from. Since using ANN is a supervised learning technique the data used to train it must be labelled. It thus saves a lot of time if the dataset chosen is already labelled when fetching it or that it can be automatically labelled by some automated process. This is since we were looking for a large dataset to train the ANN. Manually labelling several thousands of data points was never an option when deciding on the dataset. It would be too time consuming for the scope of the project.
+\\\\
+After searching for difference sources of data it finally came down to two datasets; Ubuntu Dialogue Corpus and Reddit data. The Ubuntu Dialogue Corpus contained forum posts with back and forth discussions whereas the Reddit dataset contained a post and whether a certain user had up or down voted that post. Using The Reddit API it was also possible to extract more information from a post, such as which category it belonged to.
+\\\\
+The reason for having the Ubuntu Dialogue Corpus and the Reddit up-votes and down-votes data as final considerations comes down to a few factors. A big factor was the overall characteristics of the data; it was text content written by users for other users. There were also interaction with the content which could be used to indicate interest in a topic. The availability of the data and its format were also factors.
+\\\\
+After some deeper examination and comparison between the two datasets the Reddit dataset was finally chosen. It had a very simple format but primarily it had a very strong indication of user interest compared to the Ubuntu Dialogue Corpus. In the Reddit dataset content was directly linked to users on the platform which had either up or down-voted it. On Reddit, up or down voting content means that the user clicks a button indicating if the like or dislike a certain post. We made an assumption that an active decision to either up or down-vote some content would indicate interest and that a general user less likely to engage in a full discussion (as in the Ubuntu Dialogue Corpus) compared to just clicking a button.
+\\\\
+An example of how an entry in the Reddit dataset could look like after post-processing is shown in table \ref{table:example_reddit_data}. The raw dataset only contained IDs to posts and categories/subreddits which had to be converted to actual content using the Reddit API. Details on the actual gathering and post-processing of the data is described in section \ref{sec:gathering_data}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| } 
+        \hline
+        \textbf{Title} & \textbf{Content} & \textbf{Subreddit} & \textbf{Upvotes} & \textbf{Downvotes} \\
+        \hline
+        \hline
+        A title... & Some content... & subreddit & user1, user2 & user3\\
+        \hline
+    \end{tabular}
+    \caption{Table describing reddit data  bla bla}
+    \label{table:example_reddit_data}
+\end{table}
+\\
+A question that arose was how to interpret the downvotes or lack of interaction. If user has upvoted a post we assume that  means that the user found the post enjoyable or interesting, but what if the user has downvoted the post or not interacted at all with it? If a user has downvoted a post that could potentially mean one of two things; either the user did not like the content and do not want to see similar posts again or the user find the post interesting but does not agree with the point of view of the author. In the case where a downvote still represents interest we believe that the user most likely want to see more similar posts. Similarly with no interaction, a user might simply not have either seen the post, has not liked it or has not cared enough to vote on it. Given these combinations of possibilities we decided to make an assumption that if a user had downvoted a post that still indicated interest of the post and if a user had not interacted at all with a post it would mean nothing.
 
-\subsection{Upvotes and downvotes}
-The network is learning to predict which reddit users are interested in a given title of a reddit post. It learns this by looking at the interactions that users have had with similar posts. If user have upvoted a post that clearly means that the user found the post enjoyable or interesting, but what if the user has downvoted the post or not interacted at all with it? %kan omformuleras efter att vi har bestamt om vi ska ha med dem eller ej.
-If a user have downvoted a post that could mean one of two things; either the user did not like the content and do not what to see similar posts again or the user find the post interesting but does not agree with the point of view of the poster, in this case the user most likely want to see more similar posts. Similarly with no interaction, a user might simply not have seen the post not liked it or not cared enough to upvote it. This is a problem of social studies, how do user use their downvote?
+\section{Gathering data}\label{sec:gathering_data}
+The dataset decided on is not so useful in its raw form. As briefly described in section \ref{sec:deciding_dataset} the raw data only consisted of ID references. As an example, a data point in the raw dataset could look like in table \ref{table:raw_reddit_data}. This is far from how the dataset looked like after processing, shown in table \ref{table:example_reddit_data}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ |c|c|c| } 
+        \hline
+        \textbf{Username} & \textbf{Post ID} & \textbf{Vote} \\
+        \hline
+        \hline
+        johndoe & <some ID> & -1\\
+        \hline
+    \end{tabular}
+    \caption{An example data point in the raw Reddit dataset}
+    \label{table:raw_reddit_data}
+\end{table}
+\\
+In the raw form shown in table \ref{table:raw_reddit_data} the data is modelled as a relation from a specific user to a specific post. A post is also represented as a single ID instead of by its title, content and subreddit/category. To get from this from the raw format to the post-processed format two steps were made. The first was to extract more detail from each post ID and the second was to re-arrange the relation of the data to instead model a relationship from a unique post to several users.
+\\\\
+To turn a single post ID into meaningful content that could be used as training data in the project the Reddit API was used. As a post ID is only a reference in Reddit's database the API could be used to extract more information by passing the ID to it. The API specifically had an endpoint that could take one or more post IDs as input and return a list with all information available about that post. This enabled the extraction of the post's title and content as well as which subreddit it belongs to. As the dataset is large it would have been ineffective to make the extraction from the post ID manually, so a small so called \textit{scraper} was programmed to automate the task. The Reddit scraper is available at \url{https://github.com/kandidat-highlights/reddit-scraper}.
+\\\\
+Once more details about each post was extracted the data still had to be re-arranged. The problem with the original format is that each data point models a single user's either up or down vote for a single post. For the problem described in this report the input to the system should be a post and the output should be all users who are interested in it and this is not something that can be modelled with the original format. A format where each post is represented by a single data point was desired. The same data point would also contain all users who has up or down voted the post. The way the final format, as shown in table \ref{table:example_reddit_data}, was achieved by loading all the data into a relational database. Using the database the desired format could then be obtained.
+\\\\
+By having the data in a relational database it was easy throughout the course of the project to extract different samples of data suitable for some experiments. As an example it could be used to split the dataset into training, validation and testing subsets.
 
-\section{Gathering data}
-något om att deep ann:s behöver mycket data %Must be mentioned in theory part
-\section{Modeling as an RNN}
+\section{Modelling the artificial neural network}
 Since the input to the network is text it was decided that the initial layer would be a recurrent neural network. This was because RNNs have the capability of keeping context through the input and context is very important in natural language. The RNN would then provide a ANN with context free input that the ANN could generalise from.
 \subsection{Tensorflow}%The explanation about tensorflow should be made in terminology, here we shall only name how we will use it.
 Tensorflow is a high level framework, developed by Google to give the possibility of developing machine learning applications without having a deep knowledge. %även om det är sant att man inte behöver vara ML proffs tycker jag det får oss att låta dumma% 
@@ -33,7 +73,11 @@ blabla
 %Flytta förklaringen till ordlista? 
 Collaborative filtering can be used in what is called recommender systems. The goal of a recommender system is to recommend users products that the user finds interesting or helpful. Collaborative filtering operates under the assumption that if Bob likes cats and dogs and Alice likes cats, Alice is more likely to also like dogs since Bob likes dogs and Alice share a interest with Bob. Collaborative filtering has found success in recommending items such as movies (netflix prize source). %Kanske något mer om hur vi använde detta som baseline%
 
-\subsection{N-gram}
+\subsection{N-grams as a baseline}
+N-grams are used in computational linguistics to model natural language using probability and statistics.  N-grams are a sequence of $n$ items based on some kind of text or corpus, the items could for example be words and an N-gram could then be an n-tuple of adjacent words in the original text. The $2$-grams, or more commonly bi-grams, of the text "A rhinoceros is heavy" would be (A,rhinoceros), (rhinoceros,is), (is,heavy). Sometimes additional information is added to the original text such as special start of sentence tokens.\\
+\\\\
+In this project a model based on n-grams have been used as a baseline. This N-gram based model first compute  all 1,2, and 3 -grams in the corpus and for each N-gram $g$, give it a unique number $g_i$ between $0$ and $k$ where $k$ is the total number grams in the corpus. A so called category vector is then built for each user. A category vector for user $u$, $\vec{V_u}$ is a $k$-dimensional vector with entry $\vec{V_{ui}} = n \iff $ the gram $g_i$ occurs $n$ times in the corpus for user $u$. The corpus for user $u$ is defined as all titles labelled with user $u$.
+
 \section{Computing power restrictions} %Should 
 \section{Integration with an application}
 
