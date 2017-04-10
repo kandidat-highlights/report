@@ -5,6 +5,8 @@
 \newcommand{\varthetitle}{Evaluation of deep learning for recommending web content}
 \newcommand{\varthesubtitle}{Using recurrent neural networks as an alternative to classic recommender systems}
 
+\usepackage{multicol}
+\usepackage{tabu}
 % BASIC SETTINGS
 \usepackage{glossaries}                             % Glossarie
 \usepackage{moreverb}								% List settings
@@ -41,6 +43,9 @@ sorting=nyt,
 citestyle=apa 
 ]{biblatex}
 \DeclareLanguageMapping{english}{english-apa}
+\DefineBibliographyStrings{english}{%
+  references = {References},
+}
 \addbibresource{references.bib}
  
 

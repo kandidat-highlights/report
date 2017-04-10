@@ -1,3 +1,38 @@
 % CREATED BY DAVID FRISK, 2016
-\chapter{Appendix 1}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\chapter{The Reddit dataset}\label{appendix:reddit}
+The Reddit dataset was retrieved from \url{https://www.reddit.com/r/redditdev/comments/bubhl/csv_dump_of_reddit_voting_data/}. The dataset was published by the user \textit{ketralnis} who is an employed administrator on Reddit. The data come directly from the official Reddit databases.
+\\\\
+The raw data as retrieved contains three fields per data point which represent a user, a post ID and a vote. Every data point in the dataset indicates that a specified user has either up- or downvoted a certain post on Reddit. An excerpt from the dataset looks like shown in table \ref{table:reddit_raw_excerpt}.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ c c c } 
+        \hline
+        \textbf{Username} & \textbf{Post ID} & \textbf{Vote} \\
+        \hline
+        \multicolumn{3}{c}{\vdots} \\
+        2bornot2b & t3\_899vr & 1 \\
+        2bornot2b & t3\_89as2 & -1 \\
+        2bornot2b & t3\_89az7 & 1 \\
+        2bornot2b & t3\_89b84 & 1 \\
+        2bornot2b & t3\_89c4k & 1 \\
+        2bornot2b & t3\_89de8 & -1 \\
+        2bornot2b & t3\_89e1e & 1 \\
+        %2bornot2b & t3\_89ek9 & 1 \\
+        %2bornot2b & t3\_89fuq & 1 \\
+        %2bornot2b & t3\_89fxh & 1 \\
+        %2bornot2b & t3\_89h1p & 1 \\
+        %2bornot2b & t3\_89hpy & 1 \\
+        %2bornot2b & t3\_89ko9 & -1 \\
+        \multicolumn{3}{c}{\vdots} \\
+    \end{tabular}
+    \caption{An excerpt from the raw dataset with the field username, post ID and vote.}
+    \label{table:reddit_raw_excerpt}
+\end{table}
+\\
+This raw dataset contains $7,405,561$ votes for a total of $31,927$ users and $ 2,046,401$ posts. The dataset only contains votes from users who have actively agreed to make their votes public. The dataset contains the latest $1000$ up- and downvotes (for a total of $2000$ votes) for each user. The action to either upvote or downvote a post on Reddit is used on the website to rank posts against eachother where an upvote indicates that a user likes a post and a downvote indicates the opposite. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figure/reddit/reddit_voting}
+    \caption{An example of a post on Reddit and how it can be either up- or downvoted. (Screenshot from \url{http://reddit.com/}, April 4, 2017)}
+    \label{fig:example_reddit_post}
+\end{figure}
