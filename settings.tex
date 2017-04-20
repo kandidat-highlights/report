@@ -5,6 +5,8 @@
 \newcommand{\varthetitle}{Evaluation of deep learning for recommending web content}
 \newcommand{\varthesubtitle}{Using recurrent neural networks as an alternative to classic recommender systems}
 
+\usepackage{subcaption}
+\usepackage{adjustbox}
 \usepackage{multicol}
 \usepackage{tabu}
 % BASIC SETTINGS
@@ -35,6 +37,13 @@
 	\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#3}}}}
 \usepackage{float} 									% Enables object position enforcement using [H]
 \usepackage{parskip}								% Enables vertical spaces correctly 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 
 \usepackage[
 backend=biber,
