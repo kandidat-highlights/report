@@ -1,36 +1,29 @@
 \chapter{Discussion}
 
-Here we discuss our amazing results from the method, a lot of tables and stuff. Yay
-
+This chapter will discuss the obtained results from chapter \ref{chap:results}, the problems that affected the results and possible extensions in order to improve the performance of the model.
 
 \section{Performance Measure}%How we calculate precision/validation top k. Consequences etc
-We are choosing top 1 user for now. A problem with this blablabla \todo{write more}
-Maybe F1-score is not the right measure for this type of problem. Depends on the business-logic of the problem, if it is more tolerable to recommend too many users or too few. In that case maybe the precision or recall by itself would be more fair. 
-As an alternative human-based evaluations might be more interesting to evaluate.
+There is a risk that F1-score is not the right measure for this type of problem. Which measure to use depends on the business-logic of the problem, if it is more tolerable to recommend too many users or too few. In that case maybe the precision or recall by itself would be a more fair measure. 
+As an alternative, human-based evaluations might be more interesting to evaluate.
 
 \section{Filter Bubble}
-An upcoming issue with recommender systems in general is filter bubble.
-Filter bubble is a consequence when training the networks on user data. The problem is that users will only be recommended similar information/items to what they have previously liked/encountered, meaning that the users will stay inside their bubble. 
+An upcoming issue with recommender systems in general is filter bubble. \parencite{nguyen2014exploring}
+Filter bubble is the consequence of training the networks on user data. The problem is that users will only be recommended similar information/items to what they have previously liked/encountered, meaning that the users will stay inside their bubble. 
 \\\\
-One of the simple countermeasures against this is if the users themselves are aware of this and actually browse information outside of their comfort zone. This additional information about users will hopefully be taken into account when training the network. 
+One of the simple countermeasures against this is if the users themselves are aware of this and actually browse information outside of their comfort zone. This additional information about users will hopefully be taken into account when training the network. Another solution would be to use the information about the users in order to group them and recommend items based on that information.
 \\\\
-\todo{How we treat upvotes/downvotes as interesting, this is in method already. Discuss problems here}
-
-\todo{consider if this is the right place for this}
 Similar issues may arise if a user likes too general information. It will be hard to recommend specific things to that user, because a general view would result in all information being recommended to the user. This is more of an issue of the dataset that is being used for the training of the network. \todo{Discuss variance in our dataset here maybe?}
 \\\\
-%not having more personal data about the user
 The Reddit dataset that is used in this project, and Reddit in general, does not hold any information about the users. This can be seen as a drawback compared to other platforms, for example Amazon where users have information about their interests, social media and occupation, but also a short bio. \todo{Maybe give source of Amazon.com}\\
-The project does not cover data with access to personal information, in order to do this a new dataset has to be found or labeled manually and for now, will be seen as out of scope.
+The project does not cover data with access to personal information, in order to do this a new dataset has to be found or labelled manually and for now, will be seen as out of scope.
 
 \todo{Discuss computing power restrictions}
-\section{Application}
-Due to time restrictions integration with an application was not developed
 \section{Dataset}
 This section will discuss the dataset, the disadvantages with it and what assumptions were made about it and how that might have affected the result.
 \subsection{Size of dataset}
 \subsection{Treating downvotes and upvotes as one}
-In this thesis we made the assumption that both up-votes and down-votes were signs of interest. We also assumed that if a users did not interact with the content that users was not interested in that content. These are big assumptions that are not based on much more than intuition and might not be the best way to label the data. For instance it might be more reasonable to think of down votes as disinterests, upvotes as interests and not consider the neutral votes at all since the user might not even have seen the post. 
+In this thesis we made the assumption that both up-votes and down-votes were signs of interest. We also assumed that if a users did not interact with the content that users was not interested in that content. These are big assumptions that are not based on much more than intuition and might not be the best way to label the data. For instance it might be more reasonable to think of down votes as disinterests, upvotes as interests and not consider the neutral votes at all since the user might not even have seen the post. How to best interpret the up and down votes is not something that was explored.
+
 \section{Future work}
 As this project was time bounded somethings was left untested, this section will discuss in what way this project can be extended.
 
@@ -42,12 +35,24 @@ The pros for this solutions are (1) when our network were tested against Faceboo
 Due to the time constraint we were forced to limit our development of the model and thus creating some constraints. This lead to that we were only able to create a subset of networks, i.e. in our networks all hidden units have the same number of neurons. This might not be the best way of modelling the networks, many networks instead follow the geometric pyramid rule \parencite{masters1993practical}, which suggests that number of neurons shrinks with each layer.
 
 \subsection{Features that were not used}
-Additional to the title and the subreddits there are more features to the reddit data that might have been used. One example of this the acctual content of the post. When creating a post it has to have title and it will posted on a subreddit, besides this the poster can also choose to add some content e.g. text or images or links. There might be some pattern between what type of content a post have and a users interest in that post.
+Additional to the title and the subreddit, there are more features to the reddit data that have been used. One example of this is the actual content of the post. When creating a post it has to have title and it will posted on a subreddit, besides this the poster can also choose to add some content e.g. text or images or links. There might be some pattern between what type of content a post has and a user's interest in that post.
+
+\subsubsection{Post content}
+Regarding the content of a post, some analysis on the dataset revealed that only about $x\%$ of all posts actually had any content - the rest only had a title. This lead to the decision to not create a new RNN input layer for parsing the content of a post. Instead the dataset was processed to only show whether a post had any content or not, in a binary way. This was also concatenated with the output of the existing RNN and the subreddit input. Just like for the subreddits; the option to either use the extra input or not turned into a hyperparameter.
+
 \subsection{Using time}
 It has been shown that it often is better to use the result from each unroll to make predictions (see chapter 10.2 in \parencite{Goodfellow-et-al-2016}), this might be in our case as well. Although we have a lacking knowledge about this and are not sure how to apply it to the problem, this was also discovered late in the project and there were not enough time to investigate and evaluate.
 
 \subsection{Encoding of subreddits}
-An improvement to investigate is to also use RNN for subreddits, hoping that the name of subreddit will play a significant role in the performance, the reasoning is that some subreddits have similar names (e.g machinelearning and learnmachinglearning) or have similar semantic meaning. This motivates using character-based RNN for the subreddits in the network.
+An improvement to investigate is to also use RNN for subreddits, hoping that the name of subreddit will play a significant role in the performance. The reasoning is that some subreddits have similar names (e.g machinelearning and learnmachinglearning) or have similar semantic meaning. This motivates using character-based RNN for the subreddits in the network.
 
-\section{Future work}
-Regarding the content of a post, some analysis on the dataset revealed that only about $x\%$ of all posts actually had any content - the rest only had a title. This lead to the decision to not create a new RNN input layer for parsing the content of a post. Instead the dataset was processed to only show whether a post had any content or not, in a binary way. This was also concatenated with the output of the existing RNN and the subreddit input. Just like for the subreddits; the option to either use the extra input or not turned into a hyperparameter.
+\section{Real world usability}
+
+\section{Dead neurons}
+When a neuron is turned off during training it is called a dead neuron. When there is a dead neuron, errors can't propagate through it and it affects other neurons in the network.\\\\
+This is common to happen in ReLU neurons and they remain dead unless some data in the training set activates them. ReLU is a function that evaluates to zero when the input is less than or equal to zero. This leads to the gradient being zero if the input is also zero. The gradient on the neuron will always be zero because the training example causes the neuron to have a negative value. Which renders the neuron useless no matter the amount of training because its weights never get changed.\\\\
+There is however a way to reduce the number of dead neurons with leaky ReLU. Leaky ReLU will use another function that goes from being zero to a small negative slope.\parencite{maas2013rectifier} \\
+Leaky ReLU can be defined in the following way:\\
+\begin{equation}
+    f(x)=max(0.01x,x)
+\end{equation}

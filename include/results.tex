@@ -2,7 +2,23 @@
 This chapter will present the results achieved in the project as described in Chapter \ref{chap:method}.  These results includes comparisons between different models and their hyperparameters.
 
 \section{Analysis of the dataset}
+
+\subsection{5 user data set allvotes}
+\subsection{}
+
+\subsection{50 user data set allvotes}
+\subsection{50 user data set only upvote}
+
+
 Skriv om statisitk kring datasetet här, det som Jonatan har kollat på.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figure/results/histupvote}
+    \caption{A histogram with number of upvote per post on the x axis and number of posts on the y axis.}
+    \label{fig:histvotes}
+\end{figure}
+
+As seen in figure \ref{fig:histvotes} most of the posts have a low number of upvotes, this could potentially mean that it is hard to learn from this data.
 
 \section{The first iteration model}
 The first iteration of the model was implemented with no hidden layers, as described in section \ref{sec:modelling_the_ann}. It had an LSTM-RNN layer as its input layer with 30 LSTM units. Full details on this model are found in section \ref{sec:app2_first_iter}. When this model was trained on a dataset downscaled to contain 5 users overfitting was achieved as shown in figure \ref{fig:first_iter_overfitting}.
@@ -18,7 +34,7 @@ The first iteration of the model was implemented with no hidden layers, as descr
 \label{fig:first_iter_f1}
 \end{subfigure}
  
-\caption{The cross entropy error and $F_1$ score of the first iteration model after 200 training epochs, trained on the training and validation sets.}
+\caption{The cross entropy error and $F_1$ score of the first iteration model after 200 training epochs, trained on the training and validation sets. It is good to achieve a low error and a high $F_1$. $F_1$ range between $0$ and $1$.}
 \label{fig:image2}
 \end{figure}
 \\
@@ -40,7 +56,7 @@ The final result of the hyperparamaters are shown in table \ref{table:hyperparam
         Trainable embedding matrix & todo \\ \hline
         Hidden layers & todo \\ \hline
         Neurons in hidden layers & todo \\ \hline
-        Usee L2 regularisation & todo \\ \hline
+        Use L2 regularisation & todo \\ \hline
         L2 Factor & todo \\ \hline
         Dropout regularisation & todo\\ \hline
         Dropout probability & todo \\ \hline
@@ -53,14 +69,11 @@ The final result of the hyperparamaters are shown in table \ref{table:hyperparam
 \end{table}
 \section{Baseline comparison} 
 \todo{lägga in fina tabeller}
-\subsection{Facebook classifier got pwned}
+\subsection{Facebook fastText classifier}
 
-\subsection{Random classifier is useless}
+\subsection{Random classifier}
 
-\subsection{N-grams put up a fight}
-
-\subsection{Highlight vector selection is not as cool as it sounds :D}
-
-
-\section{Real world usability}
+\subsection{N-grams}
+The F1-score of $0.3898$ was achieved with n-grams when performing on the dataset with five users.
+%kör testet med 50 användare sen, GLÖM INTE PLSPLSPLSPLSPLSPLS
 
