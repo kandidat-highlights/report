@@ -2,8 +2,7 @@
 Contains details of the different models mentioned in Chapter \ref{chap:results}.
 
 \section{The first iteration model}\label{sec:app2_first_iter}
-The hyperparameters for the first iteration model:
-\begin{lstlisting}
+\begin{comment} % Keep as a reference
 data:
   path: 'resources/datasets/'
 
@@ -41,4 +40,31 @@ network:
     # Validation configs:
     use_constant_limit: false
     constant_prediction_limit: 0.3
-\end{lstlisting}
+\end{comment}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ r  l }
+        \hline
+        \textbf{Hyperparameter}  &  \textbf{Value} \\ \hline \hline
+        Learning rate & 0.5  \\ \hline
+        Vocabulary size & 20000 \\ \hline
+        Batch Size & 25 \\ \hline
+        RNN units & 30  \\ \hline
+        RNN neurons & 200 \\ \hline
+        Embedding Size & 150 \\ \hline
+        Pre-trained embedding matrix & False \\ \hline
+        Trainable embedding matrix & N/A \\ \hline
+        Hidden layers & 0 \\ \hline
+        Neurons in hidden layers & N/A \\ \hline
+        Use L2 regularisation & False \\ \hline
+        L2 Factor & N/A \\ \hline
+        Use Dropout regularisation & False \\ \hline
+        Dropout probability & N/A\\ \hline
+        Use constant prediction limit & False \\ \hline
+        Constant prediction limit & N/A  \\ \hline
+        Use subreddit input & False \\ \hline
+        Pre-trained on subreddits & False \\ \hline
+    \end{tabular}
+    \caption{The hyperparameters for the first iteration model}
+    \label{table:first_iter_parameters}
+\end{table}

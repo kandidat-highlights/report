@@ -10,7 +10,7 @@ Similar problems to the above mentioned have been solved in other fields such as
 The aim of this project is to evaluate the performance of deep recurrent neural networks to personalise recommendations for users on social platforms.
 
 \section{Problem Description}
-To complete the purpose of this project, the correlation between some content on the platform and users' interest needs to be modelled. This will be attempted using an artificial neural network. In order to successfully model this problem there are a number of factors that must be considered.
+To complete the purpose of this project, the relation between some content on the platform and users' interest needs to be modelled. This will be attempted using an artificial neural network. In order to successfully model this problem there are a number of factors that must be considered.
 \\\\
 First of all, in order to use an artificial neural network a dataset which can be used for training is needed. When a dataset is obtained, the ANN must be modelled to capture the relation between the contents of a text and a user's interest. The modelling is a key part of the problem where a lot of experimentation with hyperparameters is needed. The number of layers, their sizes and different functions in the network needs to be examined. Once an optimal performance has been achieved it also needs to be compared with some baseline in order to evaluate whether this method is good in practice or not. These problems, as described in more detail below,  must be addressed and solved in order to achieve the goal of the project.
 
@@ -25,11 +25,11 @@ For all datasets available not all are suited to the task. The dataset needs to 
 As part of this project, potential datasets that fulfilled the above constraints were examined to select the most suitable one.
 
 \subsection{Finding Hyperparameters}
-The hyperparameters for the ANN will in the end determine its performance. This is since the hyperparameters determine characteristics of the ANN -- its shape, size and how it computes its results. Some of the hyperparameters that were examined are described below:
+The hyperparameters for the ANN will in the end affect its performance. This is since the hyperparameters determine characteristics of the ANN -- its shape, size and how it computes its results. Some of the hyperparameters that were examined are described below:
 \vspace*{0.25cm}
 \begin{itemize}
     \item Depth of network, how many layers the network needs
-    \item Bredth of layers, how many nodes each layer has
+    \item Width of layers, how many nodes each layer has
     \item Size of embedding matrix
     \item Learning rate
 \end{itemize}

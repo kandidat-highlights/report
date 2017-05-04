@@ -6,48 +6,61 @@ This chapter will discuss the obtained results from chapter \ref{chap:results}, 
 There is a risk that F1-score is not the right measure for this type of problem. Which measure to use depends on the business-logic of the problem, if it is more tolerable to recommend too many users or too few. In that case maybe the precision or recall by itself would be a more fair measure. 
 As an alternative, human-based evaluations might be more interesting to evaluate.
 
-\section{Filter Bubble}
-An upcoming issue with recommender systems in general is filter bubble. \parencite{nguyen2014exploring}
-Filter bubble is the consequence of training the networks on user data. The problem is that users will only be recommended similar information/items to what they have previously liked/encountered, meaning that the users will stay inside their bubble. 
-\\\\
-One of the simple countermeasures against this is if the users themselves are aware of this and actually browse information outside of their comfort zone. This additional information about users will hopefully be taken into account when training the network. Another solution would be to use the information about the users in order to group them and recommend items based on that information.
-\\\\
-Similar issues may arise if a user likes too general information. It will be hard to recommend specific things to that user, because a general view would result in all information being recommended to the user. This is more of an issue of the dataset that is being used for the training of the network. \todo{Discuss variance in our dataset here maybe?}
-\\\\
-The Reddit dataset that is used in this project, and Reddit in general, does not hold any information about the users. This can be seen as a drawback compared to other platforms, for example Amazon where users have information about their interests, social media and occupation, but also a short bio. \todo{Maybe give source of Amazon.com}\\
-The project does not cover data with access to personal information, in order to do this a new dataset has to be found or labelled manually and for now, will be seen as out of scope.
+
 
 \todo{Discuss computing power restrictions}
 \section{Dataset}
-This section will discuss the dataset, the disadvantages with it and what assumptions were made about it and how that might have affected the result.
+This seaction will discuss the dataset, the disadvantages with it and what assumptions were made about it and how that might have affected the result.
 \subsection{Size of dataset}
 \subsection{Treating downvotes and upvotes as one}
 In this thesis we made the assumption that both up-votes and down-votes were signs of interest. We also assumed that if a users did not interact with the content that users was not interested in that content. These are big assumptions that are not based on much more than intuition and might not be the best way to label the data. For instance it might be more reasonable to think of down votes as disinterests, upvotes as interests and not consider the neutral votes at all since the user might not even have seen the post. How to best interpret the up and down votes is not something that was explored.
 
+\subsection{Most up - downvotes are unique}
+One of the most interesting things that was discovered when looking more closely at the datasets was the sparsity of overlapping up and downvotes, especially in the five user dataset. As mentions in \ref{sec:five-user-data-set} only about $1\%$ of titles have overlap in the training set for five users and it is even less for the validation and testing set. Having so few titles with user overlap could mean the the best way of choosing what users to recommend is the top-2 or top-1 approach. Another possibility seeing as there is little overlap between subreddits is to go with a purely statistical approach, you could, given an input title along its subbreddit recommend the user that is most active in that subbredit. The problem with both of these is that they are not very practical, in the real work there is most likely more than one or two people that would like to get a recommendations seeing as popular reddit posts can for example can get tens of thousands of votes.\\\\
+
+Another consequence of votes being distributed in this way is that recommending more than one user is most often wrong. Any model that recommends 2 or more users will get at least one of the recommendations wrong. This will make it difficult to construct a model for the real world since you most certainly want to reccomend more than one user, but the dataset wants you to do the opposite.
+%Kanske något om att hur man ska välja vilka att rekomenderar beror mycket på platformen?
+\subsection{Title lengths}
+Är längden på våra titlar lagom, för korta eller för långa?
+\subsection{Subreddit activity levels}
+In part related to the fact the there is now a not a lot of overlap of users in their votes users tend to a have few subbreddits that they are most active and then very few votes in the remaining subreddits. The most clear example of this is the user \textit{akkartik}. In table \ref{table:5-user-set-train} we can see that of the total $1387$ votes, $1333$ of these are from two subbreddits. Even though not all users are as extreme as there is definitely a trend to keep to a few subreddits and be active mainly in those. This could lead to the network being wrongfully punished for recommending content outside of a user's common subreddits even if perhaps it is closely related. A user spending most of his or her time in the subbreddit \textbf{programming} interacting with posts about Java should perhaps be recommended content in the Java subreddit but since the user have never visited the subreddit the network will be punished for recommending that user such content. To see if this is actually a common occurrence a user study similar to that done in \parencite{suorra2016assisting} could have been conduced to get real world feedback.
+
+\subsection{Filter bubble}
+An upcoming issue with recommender systems in general is filter bubble. \parencite{nguyen2014exploring}
+Filter bubble is a consequence of training the networks on user data. The problem is that users will only be recommended similar information/items to what they have previously liked/encountered, meaning that the users will stay inside their bubble. 
+\\\\
+One of the simple countermeasures against this is if the users themselves are aware of this and actually browse information outside of their comfort zone. This additional information about users will hopefully be taken into account when training the network. Another solution would be to use the information about the users in order to group them and recommend items based on that information.
+\\\\
+The Reddit dataset that is used in this project, and Reddit in general, does not hold any information about the users. This can be seen as a drawback compared to other platforms, for example Amazon where users have information about their interests, social media and occupation, but also a short bio. \todo{Maybe give source of Amazon.com}\\
+The project does not cover data with access to personal information, in order to do this a new dataset has to be found or labelled manually and for now, will be seen as out of scope.
+
 \section{Future work}
-As this project was time bounded somethings was left untested, this section will discuss in what way this project can be extended.
+As this project was time bounded some things were left untested, this section will discuss in what way this project can be extended.
 
 \subsection{Individual networks for users}
-One problem with the current implementation is that the maximum number of users that it can be used for without retraining is fixed. This makes this solution unfeasible as a commercial application. One way of counter this would be to train one network per user.
-The pros for this solutions are (1) when our network were tested against Facebooks classifier on one user we beat them \ref{some section} (2) as mentioned in the paper \textbf{Multilayer Feedforward Networks With a Nonpolynomial Activation Function Can Approximate Any Function} by \textbf{Leshno, Lin, Pinkus, Schocken} a network that models a function $f:R^N->R^M$ can theoretically be seen as $M$ networks modelling $M$ functions $f_i:R^N->R$ \parencite{leshno1993multilayer} 
+One problem with the current implementation is that the maximum number of users that it can be used for without retraining is fixed. This makes this solution unfeasible as a commercial application. One way to counter this would be to train one network per user.
+The pros for this solutions are (1) when our network was tested against Facebooks classifier on one user we beat them \ref{some section} (2) as mentioned in the paper \textbf{Multilayer Feedforward Networks With a Nonpolynomial Activation Function Can Approximate Any Function} by \textbf{Leshno, Lin, Pinkus, Schocken} a network that models a function $f:R^N->R^M$ can theoretically be seen as $M$ networks modelling $M$ functions $f_i:R^N->R$ \parencite{leshno1993multilayer} 
 
 \subsection{Hyperparameters that were not considered}
-Due to the time constraint we were forced to limit our development of the model and thus creating some constraints. This lead to that we were only able to create a subset of networks, i.e. in our networks all hidden units have the same number of neurons. This might not be the best way of modelling the networks, many networks instead follow the geometric pyramid rule \parencite{masters1993practical}, which suggests that number of neurons shrinks with each layer.
+Due to the time constraint, we were forced to limit our development of the model and thus creating some constraints. This lead to that we were only able to create a subset of networks, i.e. in our networks all hidden units have the same number of neurons. This might not be the best way of modelling the networks, many networks instead follow the geometric pyramid rule \parencite{masters1993practical}, which suggests that number of neurons shrinks with each layer.
 
 \subsection{Features that were not used}
-Additional to the title and the subreddit, there are more features to the reddit data that have been used. One example of this is the actual content of the post. When creating a post it has to have title and it will posted on a subreddit, besides this the poster can also choose to add some content e.g. text or images or links. There might be some pattern between what type of content a post has and a user's interest in that post.
+Additional to the title and the subreddit, there are more features to the Reddit data that have not been used. One example of this is the actual content of the post. When creating a post, it has to have a title and be posted on a subreddit, besides this the poster can also choose to add some content e.g. text or images or links. There might be some pattern between what type of content a post has and a user's interest in that post.
 
 \subsubsection{Post content}
-Regarding the content of a post, some analysis on the dataset revealed that only about $x\%$ of all posts actually had any content - the rest only had a title. This lead to the decision to not create a new RNN input layer for parsing the content of a post. Instead the dataset was processed to only show whether a post had any content or not, in a binary way. This was also concatenated with the output of the existing RNN and the subreddit input. Just like for the subreddits; the option to either use the extra input or not turned into a hyperparameter.
+Regarding the content of a post, some analysis on the dataset revealed that only a small percentage of the posts had any content - the rest only had a title. This could however have been used to give some indication of what type of post that it was, e.g. some users might only like posts with videos, other might only like long texts and some might not what anything but titles.
 
 \subsection{Using time}
-It has been shown that it often is better to use the result from each unroll to make predictions (see chapter 10.2 in \parencite{Goodfellow-et-al-2016}), this might be in our case as well. Although we have a lacking knowledge about this and are not sure how to apply it to the problem, this was also discovered late in the project and there were not enough time to investigate and evaluate.
+It has been shown that it often is better to use the result from each unroll to make predictions (see chapter 10.2 in \parencite{Goodfellow-et-al-2016}), this might be in our case as well. This was discovered late in the project and there were not enough time to investigate and evaluate.
 
 \subsection{Encoding of subreddits}
-An improvement to investigate is to also use RNN for subreddits, hoping that the name of subreddit will play a significant role in the performance. The reasoning is that some subreddits have similar names (e.g machinelearning and learnmachinglearning) or have similar semantic meaning. This motivates using character-based RNN for the subreddits in the network.
+An improvement to investigate is to also use RNN for subreddits, hoping that the name of a subreddit will play a significant role in the performance. The reasoning is that some subreddits have similar names (e.g machinelearning and learnmachinglearning) or have similar semantic meaning. This motivates using character-based RNN for the subreddits in the network.
+
+\subsection{User profiles}
+As seen in the table \ref{lol} we see that there are relatively few titles per user. This means that it might not be enough data to learn what a user likes. This however could be solved by creating user profiles, classify users as belonging to one profile, and then have a network that tries to classify a title as belonging to one of these profiles, recommending every user in that profile. This would most likely also solve the problem of having a fixed number of users.
 
 \section{Real world usability}
-
+Any problem that requires complex computation on multiple levels can be applied with ANN. It is inspired by how the human brain works which learns from experience. It can be used for classification purpose, pattern recognition and in systems which learns by experience like intelligent systems.  
 \section{Dead neurons}
 When a neuron is turned off during training it is called a dead neuron. When there is a dead neuron, errors can't propagate through it and it affects other neurons in the network.\\\\
 This is common to happen in ReLU neurons and they remain dead unless some data in the training set activates them. ReLU is a function that evaluates to zero when the input is less than or equal to zero. This leads to the gradient being zero if the input is also zero. The gradient on the neuron will always be zero because the training example causes the neuron to have a negative value. Which renders the neuron useless no matter the amount of training because its weights never get changed.\\\\
@@ -56,3 +69,25 @@ Leaky ReLU can be defined in the following way:\\
 \begin{equation}
     f(x)=max(0.01x,x)
 \end{equation}
+This was also discovered late in the project and there was not enough time to investigate and evaluate this function.
+
+
+
+TODO
+
+
+
+\section{Results}
+We will discuss some results and patterns that we have found while training different networks on the datasets. The selected results are presented in CHAPTERRESULTS and all results can be found in APPENDIXBLABLA.
+
+As seen in tabel \ref{table:hyperparameters_final} the best preforming network did not use any pretraining or additional dat (i.e subreddit as input). Regarding the pretraining, this could mean that our assumption that subreddits could indicate user were wrong and that it only skewed the function value to find a less optimal extream point. 
+
+\subsection{Downscaling}
+The model that performed best on the dataset with 50 people was also tested on the dataset with 5 people, and vice versa. The F1 score on the validation test has performed badly on the dataset that it was not designed for.
+This was the case for both networks. This leads to that it will not be possible to use a smaller network (in terms of users) in order to solve the problem with more users. As a consequence it will be hard to keep updating the model since the real application gets more users daily. 
+
+\subsection{Baseline comparison}
+\subsubsection{N-grams}
+Our model did beat the N-grams model for the dataset consisting of five users. However, the difference between performance is very little, INSERTNUMBER. The drawback of neural network model is the time it takes to train it, the performance increase of INSERTNUMBERPROCENT is not a good trade-off for XXXX more time.
+\subsubsection{Facebook fasttext}
+FastText performed better on the dataset with fewer amount of users compared to our model. The performance measures were slightly different, since fasttext only supports choosing top $k$ labels while we are choosing every label above a threshold. As seen in Results (chapter hablahabla) the big majority of the posts only had one label. The performance measure of fasttext is hence biased. However, the performance in real world might actually be better. We have seen this in SOURCEOLOFPAPER, where user studies receive better results from humans than the strict, automatic evaluation.
