@@ -45,7 +45,7 @@ The best $F_1$ score achieved on the validation set using the first iteration mo
 \end{table}
 
 \section{The Final Network}\label{sec:final_model}
-After more than 250 different models were tested, the best performing network we managed to achieve for the word stemmed five users dataset had an $F_1$ score of about $0.4548$, as shown in Figure \ref{fig:final_f1}. Figure \ref{fig:final_overfitting} shows that the model started overfitting to the training data after $4047$ epochs. The precision was $0.3552$ and the recall was $0.6368$. The hyperparameters for this final model are shown in Table \ref{table:hyperparameters_final}.
+After more than 250 different models were tested (see \url{https://github.com/kandidat-highlights/data/tree/master/results}), the best performing network we managed to achieve for the word stemmed five users dataset had an $F_1$ score of about $0.4548$, as shown in Figure \ref{fig:final_f1}. Figure \ref{fig:final_overfitting} shows that the model started overfitting to the training data after $4047$ epochs. The precision was $0.3552$ and the recall was $0.6368$. The hyperparameters for this final model are shown in Table \ref{table:hyperparameters_final}.
 \begin{figure}[h!]
 \begin{subfigure}{0.5\textwidth}
 \includegraphics[width=1 \linewidth]{figure/results/stemmed_cross}
@@ -95,6 +95,7 @@ As the results from the upscaled model did not scale well, an attempt on the ful
 \begin{table}[h!]
     \centering
     \begin{tabular}{ r | c | c }
+    \multicolumn{3}{c}{\textbf{Final Network Model}} \\ \hline
     & \textbf{5 users dataset} & \textbf{50 users dataset} \\ \hline    \hline
     & \multicolumn{2}{c}{\textbf{Without stemmed dataset}} \\ \hline \hline
     $F_1$ score & $0.3908$ & $0.0480$ \\ \hline
@@ -119,6 +120,7 @@ The Facebook fastText classifier was tested on the downscaled datasets for 5 and
 \begin{table}[h!]
     \centering
     \begin{tabular}{ r | c | c }
+    \multicolumn{3}{c}{\textbf{Facebook's fastText classifier}} \\ \hline
     & \textbf{5 users dataset} & \textbf{50 users dataset} \\ \hline    \hline
     & \multicolumn{2}{c}{\textbf{Without stemmed dataset}} \\ \hline \hline
     $F_1$ score & $0.413$ & $0.118$ \\ \hline
@@ -132,6 +134,7 @@ The Facebook fastText classifier was tested on the downscaled datasets for 5 and
     \caption{The $F_1$ score, precision and recall for the Facebook fastText classifier. The results for both the regular dataset as well as the word-stemmed dataset are shown.}
     \label{table:facebook_results}
 \end{table}
+\todo{LÄGG IN RESULTAT FÖR FASTTEXT}
 
 The parameters given to fastText to achieve the results in Table \ref{table:facebook_results} can be seen in Table \ref{table:fasttext-arg}.
 
@@ -143,7 +146,7 @@ The parameters given to fastText to achieve the results in Table \ref{table:face
     lrUpdateRate & $100$ \\ \hline
     dim & $10$ \\ \hline
     ws & $5$ \\ \hline
-    epoch & $1000$ \\ \hline
+    epoch & $5000$ \\ \hline
     minCount & $1$ \\ \hline
     minCountLabel & $0$ \\ \hline
     neg & $5$ \\ \hline
@@ -156,7 +159,7 @@ The parameters given to fastText to achieve the results in Table \ref{table:face
     t & $0.00001$ \\ \hline
     pretrainedVectors & [] \\ \hline
     \end{tabular}
-    \caption{Command line parameters used to get the recorded results for fastText}
+    \caption{Command line parameters used to get the recorded results for fastText. Documentation for each of the parameters can be found at \url{https://github.com/facebookresearch/fastText} }
     \label{table:fasttext-arg}
 \end{table}
 
@@ -165,6 +168,7 @@ The N-grams based model was tested on the downscaled dataset with five users and
 \begin{table}[h!]
     \centering
     \begin{tabular}{ r | c | c }
+     \multicolumn{3}{c}{\textbf{N-grams based model}} \\ \hline
      & \textbf{5 users dataset} & \textbf{50 users dataset} \\ \hline \hline
      & \multicolumn{2}{c}{\textbf{Without stemmed dataset}} \\ \hline \hline
     $F_1$ score & $0.3898$ & -- \\ \hline
@@ -187,7 +191,7 @@ This section presents the result of the investigation into the Reddit dataset th
 
 \subsection{Downscaled Dataset with 5 Users}
 \label{sec:five-user-data-set}
-It was found in the training set for the downscaled five user dataset that the difference in length of the longest title and the second longest title was large. The longest title was $1928$ words while the second longest was $66$ words. This skewed the variance for the training data and is why the standard deviation is $24.9$, as seen in Table \ref{table:5_user_stats}. If the outlier is removed, the standard deviation is brought down to $9.7$ which is similar to the validation and testing sets.
+It was found in the training set for the downscaled 5 user dataset that the difference in length of the longest title and the second longest title was large. The longest title was $1928$ words while the second longest was $66$ words. This skewed the variance for the training data and is why the standard deviation is $24.9$, as seen in Table \ref{table:5_user_stats}. If the outlier is removed, the standard deviation is brought down to $9.7$ which is similar to the validation and testing sets.
 \begin{table}[h!]
     \centering
     \begin{tabular}{ r | c | c | c }
@@ -235,10 +239,10 @@ The analysis also showed that few users shared liked titles. In the training set
     \caption{Vote distribution showing votes in subreddits, total votes and votes in the top two voted subreddits for each user in the training, validation and testing data sets with five users}
     \label{table:5_user_density}
 \end{table}
-The vote density for the downscaled five user dataset is shown in Table \ref{table:5_user_density}. The table shows statistics for the training, validation and testing sets. It summarises how many subreddits a user has voted in, the total number of votes a user has made and how many votes a user has made in the two subreddits that the user has voted most in.
+The vote density for the downscaled 5 user dataset is shown in Table \ref{table:5_user_density}. The table shows statistics for the training, validation and testing sets. It summarises how many subreddits a user has voted in, the total number of votes a user has made and how many votes a user has made in the two subreddits that the user has voted most in.
 
 \subsection{Downscaled Dataset with 50 Users}
-Compared to the downscaled dataset with five users there are no big outliers in the downscaled dataset with $50$ users. There are however a higher percentage of users that share liked titles in comparison. As seen in Table \ref{table:50_user_stats}, for the training set, $7.75\%$ of titles have more than one vote. In the validation set it is $6\%$ and for the testing set it is $5.7\%$.
+Compared to the downscaled dataset with five users there are no big outliers in the downscaled dataset with $50$ users. There are however a higher percentage of users that share liked titles in comparison. As seen in Table \ref{table:50_user_stats}, for the training set, $8.59\%$ of titles have more than one vote. In the validation set it is $6.65\%$ and for the testing set it is $6.2\%$.
 \\\\
 \begin{table}[h!]
     \centering
